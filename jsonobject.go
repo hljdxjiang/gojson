@@ -155,10 +155,16 @@ func (jo *Jsonobject) Encode() string {
 		val, err := key.val.JsonArray()
 		if err != nil {
 			if jov, err := key.val.Object(); err != nil {
-				bo.WriteString(`"`)
 				sov := key.val.AsString("")
-				bo.WriteString(sov)
-				bo.WriteString(`"`)
+				switch key.val.data.(type) {
+				case string, []byte:
+					bo.WriteString(`"`)
+					bo.WriteString(sov)
+					bo.WriteString(`"`)
+				default:
+					bo.WriteString(sov)
+				}
+
 			} else {
 				bo.WriteString(jov.Encode())
 			}

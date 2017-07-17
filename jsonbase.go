@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"encoding/json"
 	"errors"
-	"fmt"
 )
 
 type jsonBase struct {
@@ -18,10 +17,6 @@ func (jb *jsonBase) Parse(b []byte) error {
 }
 
 func (jb *jsonBase) Map() (map[string]interface{}, error) {
-	if m1, ok := jb.data.([]interface{}); ok {
-		fmt.Printf("map arr:")
-		fmt.Println(m1)
-	}
 	if m, ok := jb.data.(map[string]interface{}); ok {
 		return m, nil
 	}
