@@ -196,7 +196,9 @@ func (jv *JsonVar) Int64() (int64, error) {
 		return 0, errors.New("this is not a jsonvar")
 	}
 	if val, err := jv.String(); err == nil {
-		return strconv.ParseInt(val, 10, 64)
+		if nval, nerr := strconv.ParseInt(val, 10, 64); nerr == nil {
+			return nval, nil
+		}
 	}
 	if s, ok := jv.data.(int64); ok {
 		return s, nil
@@ -209,7 +211,9 @@ func (jv *JsonVar) Float64() (float64, error) {
 		return 0.0, errors.New("this is not a jsonvar")
 	}
 	if val, err := jv.String(); err == nil {
-		return strconv.ParseFloat(val, 64)
+		if nval, nerr := strconv.ParseFloat(val, 64); nerr == nil {
+			return nval, nil
+		}
 	}
 	return 0.0, errors.New("type assertion to float64 faild")
 }
@@ -237,7 +241,7 @@ func (jv *JsonVar) AsInt(args ...int) int64 {
 		def = args[0]
 		break
 	}
-	if i, err := jv.Int64(); err != nil {
+	if i, err := jv.Int64(); err == nil {
 		return i
 	}
 	return int64(def)

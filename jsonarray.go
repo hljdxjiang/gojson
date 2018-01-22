@@ -27,11 +27,12 @@ func JsonArray(s string) (*Jsonarray, error) {
 	return ja, nil
 }
 
-func (jo *Jsonarray) iniArrayTOList() (mm []interface{}) {
-
+func (jo *Jsonarray) iniArrayTOList() []interface{} {
 	data := jo.jva
-	for _, ji := range data {
-		mm = append(mm, ji.data)
+	cnt := len(jo.jva)
+	mm := make([]interface{}, cnt)
+	for idx, ji := range data {
+		mm[idx] = ji.data
 	}
 	return mm
 }
@@ -104,7 +105,11 @@ func (ja *Jsonarray) Encode() string {
 				bo.WriteString(jov.Encode())
 			}
 		} else {
-			bo.WriteString(val.Encode())
+			if val == nil {
+				bo.WriteString("")
+			} else {
+				bo.WriteString(val.Encode())
+			}
 		}
 		flag = true
 		b.WriteString(bo.String())

@@ -1,8 +1,6 @@
 package gojson
 
-import (
-	"bytes"
-)
+import "bytes"
 
 type Jsonobject struct {
 	joi []jsonObjectItem
