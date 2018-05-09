@@ -1,6 +1,7 @@
 package gojson
 
 import (
+	"encoding/json"
 	"errors"
 	"strconv"
 )
@@ -10,59 +11,7 @@ type JsonVar struct {
 }
 
 func (jv *JsonVar) Value() interface{} {
-	var aa interface{}
-	if jv == nil {
-		return nil
-	}
-	data := jv.data
-	switch jv.data.(type) {
-	case bool:
-		aa = data.(bool)
-		break
-	case float32:
-		aa = float64(data.(float32))
-		break
-	case float64:
-		aa = data.(float64)
-		break
-	case int:
-		aa = int64(data.(int))
-		break
-	case int16:
-		aa = int64(data.(int16))
-		break
-	case int32:
-		aa = (int64(data.(int32)))
-		break
-	case int64:
-		aa = data.(int64)
-		break
-	case int8:
-		aa = int64(data.(int8))
-		break
-	case uint:
-		aa = uint64(data.(uint))
-		break
-	case uint16:
-		aa = uint64(data.(uint16))
-		break
-	case uint32:
-		aa = uint64(data.(uint32))
-		break
-	case uint64:
-		aa = data.(uint64)
-		break
-	case uint8:
-		aa = uint64(data.(uint8))
-		break
-	case string:
-		aa = data.(string)
-		break
-	case []byte:
-		aa = data.([]byte)
-		break
-	}
-	return aa
+	return jv.data
 }
 
 func (jv *JsonVar) String() (string, error) {
@@ -116,6 +65,10 @@ func (jv *JsonVar) String() (string, error) {
 		break
 	case []byte:
 		s = string(data.([]byte))
+		break
+	case json.Number:
+		x, _ := data.(json.Number)
+		s = string(x)
 		break
 	default:
 		return "", errors.New("type assertion to string faild")
