@@ -47,11 +47,11 @@ func (jo *Jsonobject) iniObjectTOMap() map[string]interface{} {
 
 func (jo *Jsonobject) SetKey(name string, val interface{}) {
 	ja := &JsonVar{}
-	if jo, ok := val.(*Jsonobject); ok {
+	if jo, ok := val.(Jsonobject); ok {
 		ja.data = jo.iniObjectTOMap()
-	} else if jv, ok := val.(*JsonVar); ok {
+	} else if jv, ok := val.(JsonVar); ok {
 		ja.data = jv.data
-	} else if jo, ok := val.(*Jsonarray); ok {
+	} else if jo, ok := val.(Jsonarray); ok {
 		ja.data = jo.iniArrayTOList()
 	} else {
 		ja.data = val

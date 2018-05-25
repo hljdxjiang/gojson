@@ -57,11 +57,11 @@ func (ja *Jsonarray) Append(nja Jsonarray) {
 
 func (ja *Jsonarray) AddItem(val interface{}) {
 	jv := &JsonVar{}
-	if jo, ok := val.(*Jsonobject); ok {
+	if jo, ok := val.(Jsonobject); ok {
 		jv.data = jo.iniObjectTOMap()
-	} else if njv, ok := val.(*JsonVar); ok {
+	} else if njv, ok := val.(JsonVar); ok {
 		jv.data = njv.data
-	} else if jo, ok := val.(*Jsonarray); ok {
+	} else if jo, ok := val.(Jsonarray); ok {
 		jv.data = jo.iniArrayTOList()
 	} else {
 		jv.data = val
